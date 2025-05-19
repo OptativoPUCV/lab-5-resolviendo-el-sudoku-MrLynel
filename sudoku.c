@@ -43,10 +43,63 @@ void print_node(Node* n){
     printf("\n");
 }
 
-int is_valid(Node* n){
+int is_valid(Node* n)
+{
+  int i,j,k,p;
+  //para verificar filas
+  for(i = 0; i< 9; i++)
+  {
+    int fila[10] = {0};
+    for(j= 0; j < 9;j++)
+    {
+      if(n->sudo[i][j]!= 0){
+        if(fila[n->sudo[i][j]]== 1)
+        {
+          return 0; //no es valido
+        }
+        fila[n->sudo[i][j]] = 1;
+      }
+    }
+  }
 
-    return 1;
+  //Para verificar columnas
+  for(i = 0; i < 9;i++)
+  {
+    int col[10]= {0};
+    for(j = 0; j < 9;j++)
+    {
+      if(n->sudo[j][i]!= 0)
+      {
+        if(col[n->sudo[j][i]]== 1)
+        {
+          return 0; //no es valido
+        }
+        col[n->sudo[j][i]] = 1;
+      }
+    }
+  }
+
+  //Para verificar submatrices
+  for(k = 0; k < 9;k++)
+  {
+    int sub[10]= {0};
+    for(p = 0; p< 9;p++)
+    {
+      int i = 3*(k/3)+(p/3);
+      int j = 3*(k%3)+(p%3);
+      if(n->sudo[i][j]!= 0)
+      {
+        if(sub[n->sudo[i][j]]== 1)
+        {
+          return 0; //no es valido
+        }
+        sub[n->sudo[i][j]] = 1;
+      }
+    }
+  }
+  return 1;
 }
+
 
 
 List* get_adj_nodes(Node* n)
