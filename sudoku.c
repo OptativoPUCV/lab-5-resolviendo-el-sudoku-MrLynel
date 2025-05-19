@@ -140,8 +140,18 @@ List* get_adj_nodes(Node* n)
   return list;
 }
 
-int is_final(Node* n){
-    return 0;
+int is_final(Node* n)
+{
+    int i, j;
+    for(i = 0; i < 9; i++)
+    {
+      for(j = 0; j < 9; j++)
+      {
+        //todos los valores de la matriz son distintos a 0
+        if(n->sudo[i][j] == 0)return 0;
+      }
+    }
+  return 1; // retorna 1 si el nodo corresponde a un nodo final
 }
 
 Node* DFS(Node* initial, int* cont){
