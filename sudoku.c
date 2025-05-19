@@ -43,6 +43,8 @@ void print_node(Node* n){
     printf("\n");
 }
 
+
+// Verifica que el nodo actual cumpla con las reglas del Sudoku.
 int is_valid(Node* n)
 {
   int i,j,k,p;
@@ -101,7 +103,7 @@ int is_valid(Node* n)
 }
 
 
-
+// Genera una lista con los nodos adyacentes al estado actual.
 List* get_adj_nodes(Node* n)
 {
   List* list=createList();
@@ -140,6 +142,7 @@ List* get_adj_nodes(Node* n)
   return list;
 }
 
+// Retorna 1 si el nodo representa un tablero completo, 0 si aún hay espacios 
 int is_final(Node* n)
 {
     int i, j;
@@ -154,7 +157,37 @@ int is_final(Node* n)
   return 1; // retorna 1 si el nodo corresponde a un nodo final
 }
 
-Node* DFS(Node* initial, int* cont){
+// Realiza una búsqueda en profundidad hasta encontrar una solución al Sudoku.
+Node* DFS(Node* initial, int* contador)
+{
+  Stack * pila = createStack();
+  pushBack(pila, initial);
+  Node* current;
+
+  while(!is_empty(pila)) //no esta vacia
+  {
+    current = front(pila); 
+    popFront(pila);
+    (*contador)++;
+
+    if(is_final(current)== 1)
+    {
+      clean(pila);
+      return current;
+    }
+    List* adjNodes = get_adj_nodes(current);
+    Node* node;
+    while(!is_empty(adjNodes)) //no esta vacia
+    {
+      node = front(adjNodes); 
+      popFront(adjNodes); 
+      pushBack(pila, node); 
+    }
+    clean(adjNodes); 
+    free(current);
+
+  }
+  clean(pila);
   return NULL;
 }
 
