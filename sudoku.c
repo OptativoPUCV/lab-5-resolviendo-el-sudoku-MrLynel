@@ -49,11 +49,43 @@ int is_valid(Node* n){
 }
 
 
-List* get_adj_nodes(Node* n){
-    List* list=createList();
-    return list;
-}
+List* get_adj_nodes(Node* n)
+{
+  List* list=createList();
+  int fila = -1;
+  int col = -1;
+  int i,j, num;
+  for(i = 0; i < 9 && fila == -1; i++)
+  {
+    for(j = 0; j < 9 && fila == -1; j++)
+    {
+      if(n->sudo[i][j]== 0)
+      {
+        fila = i;
+        col = j;
+      }
+    }
+  }
+  if(fila == 1 && col == -1)
+  {
+    return list; //no hay nodos adyacentes
+  }
+  for(num = 1; num <= 9; num++)
+  {
+    Node * new = copy(n);
+    new->sudo[fila][col] = num;
+    if(is_valid(new))
+    {
+      pushBack(list,new);
+    }
+    else
+    {
+      free(new);
+    }
+  }
 
+  return list;
+}
 
 int is_final(Node* n){
     return 0;
@@ -62,7 +94,6 @@ int is_final(Node* n){
 Node* DFS(Node* initial, int* cont){
   return NULL;
 }
-
 
 
 /*
